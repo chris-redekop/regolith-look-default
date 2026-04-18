@@ -34,6 +34,11 @@ load_look() {
     if [[ -n ${MONO_FONT:-} ]]; then
         gsettings set org.gnome.desktop.interface monospace-font-name "${MONO_FONT}"
     fi
+
+    COLOR_SCHEME=$($RESOURCE_GETTER gtk.color_scheme || :)
+    if [[ -n ${COLOR_SCHEME:-} ]]; then
+        gsettings set org.gnome.desktop.interface color-scheme "${COLOR_SCHEME}"
+    fi
     
     # Set the wallpaper
     WALLPAPER_FILE=$($RESOURCE_GETTER regolith.wallpaper.file || :)
