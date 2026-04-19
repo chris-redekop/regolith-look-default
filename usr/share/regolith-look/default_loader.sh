@@ -37,7 +37,11 @@ load_look() {
 
     COLOR_SCHEME=$($RESOURCE_GETTER gtk.color_scheme || :)
     if [[ -n ${COLOR_SCHEME:-} ]]; then
+      # Ensure the color-scheme key is supported before setting its value
+      INTERFACE_KEYS=$(gsettings list-keys org.gnome.desktop.interface)
+      if [[ "${INTERFACE_KEYS}" =~ (^|$'\n')color-scheme($'\n'|$) ]]; then
         gsettings set org.gnome.desktop.interface color-scheme "${COLOR_SCHEME}"
+      fi
     fi
     
     # Set the wallpaper
